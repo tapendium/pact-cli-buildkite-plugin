@@ -1,0 +1,9 @@
+name: Pact cli
+description: Pact cli utilities
+author: https://tapendium.com
+requirements:
+  - curl
+  - jq
+  - docker
+  - buildkite-agent
+configuration: ~

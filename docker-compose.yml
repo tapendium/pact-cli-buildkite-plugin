@@ -1,0 +1,19 @@
+services:
+  lint:
+    image: buildkite/plugin-linter:latest
+    command: ['--id', 'tapendium/pact-cli']
+    volumes:
+      - '.:/plugin:ro'
+
+  test:
+    image: buildkite/plugin-tester:latest
+    volumes:
+      - '.:/plugin:ro'
+
+  format-shell:
+    image: mvdan/shfmt
+    volumes:
+      - '.:/data'
+    command:
+      - --write
+      - ./data
