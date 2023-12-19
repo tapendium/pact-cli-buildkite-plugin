@@ -15,14 +15,16 @@ export PACT_BROKER_BASE_URL=pact_url
 
 @test "run.sh runs to completion" {
 	stub pact-broker \
-		"'create-or-update-pacticipant' '--name' 'service' '--main-branch' 'main' '--repository-url' 'repo' : echo 'stubbing works'"
+		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"publish pacts --consumer-app-version somehash --branch branch pacts : echo 'publishing pacts'"
 
 	export "${prefix}_ACTION"=pr
 	export "${prefix}_PACTICIPANT"=service
 	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
+	export BUILDKITE_BRANCH=branch
 
-	run $runscript 
+	run $runscript
 
 	assert_success
 }

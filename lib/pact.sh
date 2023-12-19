@@ -28,12 +28,12 @@ function record_deployment {
 
 # Publish pacts
 function publish_pacts {
-	local pacticipant=$1
-	local version=$2
-	local pact_dir=$3
+	local version=$1
+	local pact_dir=$2
+	local branch=$3
 
 	pact-broker publish pacts \
-		--auto-detect-version-properties \
-		--consumer-app-version "$2" \
+		--consumer-app-version "$version" \
+		--branch "$branch" \
 		"$pact_dir"
 }

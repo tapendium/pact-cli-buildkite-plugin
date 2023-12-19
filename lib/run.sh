@@ -29,15 +29,17 @@ function update_pacts {
 	local main_branch="$(plugin_get_var MAIN_BRANCH main)"
 	local version="$(plugin_get_var VERSION $BUILDKITE_COMMIT)"
 	assert_var version
+	local branch="$(plugin_get_var BRANCH $BUILDKITE_BRANCH)"
+	assert_var branch
 	local environment="$(plugin_get_var ENVIRONMENT production)"
 	local pact_dir="$(plugin_get_var PACTS_PATH pacts)"
 
 	if [ "$action" == "pr" ]; then
 		# Pull Request
 		upsert_pacticipant "$pacticipant" "$main_branch" "$repo_url"
-		# publish_pacts "$pacticipant" "$version" "$pact_dir"
+		publish_pacts "$version" "$pact_dir" "$branch"
 	elif [ "$action" == "merge" ]; then
-		publish_pacts "$pacticipant" "$version" "$pact_dir"
+		publish_pacts "$version" "$pact_dir" "$branch"
 		record_deployment "$pacticipant" "$version" "$environment"
 	else
 		log "Invalid action type. Must be \"pr\" or \"merge\""
