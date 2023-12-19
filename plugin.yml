@@ -1,9 +1,47 @@
-name: Pact cli
-description: Pact cli utilities
+name: Pact CLI
+description: Pact CLI helper
 author: https://tapendium.com
 requirements:
   - curl
   - jq
   - docker
   - buildkite-agent
-configuration: ~
+configuration:
+  properties:
+    debug:
+      type: string
+      description: Enable debug mode
+    pacticipant:
+      type: string
+      description: Name of consumer/provider e.g. service
+    action:
+      type: string
+      enum:
+        - pr
+        - merge
+      description: The type of pipeline
+    pacts-path:
+      type: string
+      description: Location of pacts
+      default: ./pacts
+    repo-url:
+      type: string
+      description: Repository URL
+      default: $BUILDKITE_REPO_URL
+    main-branch:
+      type: string
+      description: The main branch of the application
+      default: main
+    version:
+      type: string
+      description: The pacticipant version
+      default: $BUILDKITE_COMMIT
+    environment:
+      type: string
+      description: The environment to record deployment
+      default: production
+  required:
+    - pacticipant
+  additionalProperties: false
+
+
