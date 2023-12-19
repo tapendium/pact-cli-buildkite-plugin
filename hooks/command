@@ -4,4 +4,7 @@ set -euo pipefail
 
 declare -r PACT_DOCKER_IMAGE="tapendium/pact-cli:latest"
 
+ls -la
+
+docker run --volume "$PWD":/plugin:ro --workdir /plugin "$PACT_DOCKER_IMAGE" ls -la
 docker run --volume "$PWD":/plugin:ro --workdir /plugin "$PACT_DOCKER_IMAGE" bash ./lib/run.sh
