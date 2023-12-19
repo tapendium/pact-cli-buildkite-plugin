@@ -17,13 +17,12 @@ export PACT_BROKER_BASE_URL=pact_url
 	stub pact-broker \
 		"'create-or-update-pacticipant' '--name' 'service' '--main-branch' 'main' '--repository-url' 'repo' : echo 'stubbing works'"
 
-	source $runscript
 	export "${prefix}_ACTION"=pr
 	export "${prefix}_PACTICIPANT"=service
 	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 
-	run update_pacts
+	run $runscript 
 
 	assert_success
 }
