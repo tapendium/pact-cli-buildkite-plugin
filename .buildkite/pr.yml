@@ -2,4 +2,4 @@ steps:
   - label: ':hammer: Run unit tests'
     plugins:
       docker-compose#v3.9.0:
-        run: tests
+        run: test
