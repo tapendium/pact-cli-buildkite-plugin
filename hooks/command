@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+declare -r PACT_DOCKER_IMAGE="tapendium/pact-cli:latest"
+
+plugin_dir="$(dirname "$(dirname "${BASH_SOURCE[0]}")")"
+
+env_file="$(
+	cat <<EOF
+PACT_BROKER_BASE_URL
+PACT_BROKER_USERNAME
+PACT_BROKER_PASSWORD
+BUILDKITE_PLUGIN_PACT_CLI_ACTION
+BUILDKITE_PLUGIN_PACT_CLI_DEBUG
+BUILDKITE_PLUGIN_PACT_CLI_PACTICIPANT
+BUILDKITE_REPO
+BUILDKITE_COMMIT
+BUILDKITE_BRANCH
+EOF
+)"
+
+docker run \
+	--workdir /workdir \
+	--volume "$plugin_dir":/workdir/plugin:ro \
+	--volume "$PWD":/workdir \
+	--env-file <(echo "$env_file") \
+	"$PACT_DOCKER_IMAGE" \
+	plugin/lib/run.sh
