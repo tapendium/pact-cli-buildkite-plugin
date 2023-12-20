@@ -19,10 +19,11 @@ function update_pacts {
 	assert_var PACT_BROKER_PASSWORD
 	assert_var PACT_BROKER_BASE_URL
 
-	assert_var "${PREFIX}_ACTION"
 	assert_var "${PREFIX}_PACTICIPANT"
 
-	local action="$(plugin_get_var ACTION)"
+	local action_guess="$(get_pipeline_type "$BUILDKITE_PIPELINE_NAME")"
+	local action="$(plugin_get_var ACTION $action_guess)"
+	assert_var action
 	local pacticipant="$(plugin_get_var PACTICIPANT)"
 	local repo_url="$(plugin_get_var REPO_URL $BUILDKITE_REPO)"
 	assert_var repo_url
