@@ -58,3 +58,29 @@ utils=$PWD/lib/utils.sh
 	assert_success
 	assert_output test-value
 }
+
+@test "get_pipeline_type returns pr for validate pipelines" {
+	source $utils
+
+	run get_pipeline_type "service test: ValIdate"
+
+	assert_success
+	assert_output pr
+}
+
+@test "get_pipeline_type returns merge for deploy pipelines" {
+	source $utils
+
+	run get_pipeline_type "service test: dEplOy"
+
+	assert_success
+	assert_output merge
+}
+
+@test "get_pipeline_type returns unkonwn for unknown pipelines" {
+	source $utils
+
+	run get_pipeline_type "service test: mysteryAction"
+
+	assert_failure
+}

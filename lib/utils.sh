@@ -49,3 +49,19 @@ function command_exists {
 		exit 1
 	fi
 }
+
+# Determine if pipeline is a pr or merge pipeline
+function get_pipeline_type {
+	local name="$1"
+
+	# Set case insensitive match
+	shopt -s nocasematch
+	if [[ "$name" =~ validate$ ]]; then
+		echo "pr"
+	elif [[ "$name" =~ deploy$ ]]; then
+		echo "merge"
+	else
+		exit 2
+	fi
+	shopt -u nocasematch
+}
