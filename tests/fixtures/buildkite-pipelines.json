@@ -1,0 +1,23 @@
+{
+  "data": {
+    "organization": {
+      "pipelines": {
+        "count": 2,
+        "edges": [
+          {
+            "node": {
+              "name": "service a: Deploy",
+              "slug": "service-a-deploy"
+            }
+          },
+          {
+            "node": {
+              "name": "service a: Validate",
+              "slug": "service-a-validate"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
