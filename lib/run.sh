@@ -40,7 +40,7 @@ function update_pacts {
 		# PR pipeline
 		#
 		# Access to Buildkite Graphql API is needed for retrieving verification pipelines
-		local bk_gql_url="$(plugin_get_var BUILDKITE_GRAPHQL_URL "https://graphql.buildkite.com/v1")"
+		local bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
 		assert_var BUILDKITE_GRAPHQL_API_TOKEN
 		assert_var BUILDKITE_BUILD_URL
 

@@ -40,7 +40,7 @@ configuration:
       type: string
       description: The environment to record deployment
       default: production
-    buildkite-graphql-url:
+    graphql-url:
       type: string
       description: Buildkite graphql API URL
       default: https://graphql.buildkite.com/v1
