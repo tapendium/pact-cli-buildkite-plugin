@@ -1,0 +1,92 @@
+{
+  "summary": {
+    "deployable": null,
+    "reason": "There is no verified pact between version 0b4bba46c783718cc89dd242c799e4a8f41ef9d4 of consumer-service and a version of provider-service currently in production (no version is currently recorded as deployed/released in this environment)",
+    "success": 0,
+    "failed": 0,
+    "unknown": 2
+  },
+  "notices": [
+    {
+      "type": "error",
+      "text": "There is no verified pact between version 0b4bba46c783718cc89dd242c799e4a8f41ef9d4 of consumer-service and a version of provider-service currently in production (no version is currently recorded as deployed/released in this environment)"
+    }
+  ],
+  "matrix": [
+    {
+      "consumer": {
+        "name": "consumer-service",
+        "version": {
+          "number": "0b4bba46c783718cc89dd242c799e4a8f41ef9d4",
+          "branch": "branch-name",
+          "branches": [
+            {
+              "name": "branch-name",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Version branch",
+                  "name": "branch-name",
+                  "href": "https://pact-broker.example.com/pacticipants/consumer-service/branches/Albert%2FPeval-568/versions/0b4bba46c783718cc89dd242c799e4a8f41ef9d4"
+                }
+              }
+            }
+          ],
+          "branchVersions": [
+            {
+              "name": "branch-name",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Version branch",
+                  "name": "branch-name",
+                  "href": "https://pact-broker.example.com/pacticipants/consumer-service/branches/Albert%2FPeval-568/versions/0b4bba46c783718cc89dd242c799e4a8f41ef9d4"
+                }
+              }
+            }
+          ],
+          "environments": [],
+          "_links": {
+            "self": {
+              "href": "https://pact-broker.example.com/pacticipants/consumer-service/versions/0b4bba46c783718cc89dd242c799e4a8f41ef9d4"
+            }
+          },
+          "tags": [
+            {
+              "name": "branch-name",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "href": "https://pact-broker.example.com/pacticipants/consumer-service/versions/0b4bba46c783718cc89dd242c799e4a8f41ef9d4/tags/Albert%2FPeval-568"
+                }
+              }
+            }
+          ]
+        },
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/consumer-service"
+          }
+        }
+      },
+      "provider": {
+        "name": "provider-service",
+        "version": null,
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/provider-service"
+          }
+        }
+      },
+      "pact": {
+        "createdAt": "2023-12-20T19:55:51+00:00",
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacts/provider/provider-service/consumer/consumer-service/version/0b4bba46c783718cc89dd242c799e4a8f41ef9d4"
+          }
+        }
+      },
+      "verificationResult": null
+    }
+  ]
+}
