@@ -31,7 +31,7 @@ docker run \
 	--workdir /workdir \
 	--volume "$plugin_dir":/workdir/plugin:ro \
 	--volume "$PWD":/workdir \
-	--volume "$(command -v buildkite-agent)":/usr/bin/buildkite-agent \ 
---env-file <(echo "$env_file") \
+	--volume "$(command -v buildkite-agent)":/usr/bin/buildkite-agent \
+	--env-file <(echo "$env_file") \
 	"$PACT_DOCKER_IMAGE" \
 	plugin/lib/run.sh
