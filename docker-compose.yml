@@ -17,3 +17,11 @@ services:
     command:
       - --write
       - ./data
+
+  lint-shell-format:
+    image: mvdan/shfmt
+    volumes:
+      - '$PWD:/data'
+    command:
+      - --diff
+      - ./data
