@@ -2,6 +2,7 @@
 
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# shellcheck source=lib/constants.sh
 . "$CWD/constants.sh"
 
 # Read plugin property value from its name
