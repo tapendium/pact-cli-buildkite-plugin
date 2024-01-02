@@ -35,7 +35,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: upload
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v1.0.0:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
 ```
 
@@ -54,7 +54,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: download
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v1.0.0:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
 ```
 
@@ -73,7 +73,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: upload
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v1.0.0:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
           action: merge #valid values: pr or merge
           environment: test #default production
