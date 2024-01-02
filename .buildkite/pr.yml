@@ -23,3 +23,9 @@ steps:
       - *merge-main
       - docker-compose#v3.9.0:
           run: lint-shell-format
+
+  - label: ':lint-roller: Run plugin linter'
+    plugins:
+      - *merge-main
+      - docker-compose#v3.9.0:
+          run: lint-plugin
