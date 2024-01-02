@@ -4,8 +4,13 @@ set -eo pipefail
 
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# shellcheck source=lib/utils.sh
 . "$CWD/utils.sh"
+
+# shellcheck source=lib/pact.sh
 . "$CWD/pact.sh"
+
+# shellcheck source=lib/buildkite.sh
 . "$CWD/buildkite.sh"
 
 if [[ "${BUILDKITE_PLUGIN_PACT_CLI_DEBUG:-false}" =~ (true|on|1) ]]; then
@@ -22,25 +27,42 @@ function update_pacts {
 
 	assert_var "${PREFIX}_PACTICIPANT"
 
-	local action_guess="$(get_pipeline_type "$BUILDKITE_PIPELINE_NAME")"
-	local action="$(plugin_get_var ACTION $action_guess)"
+	local action_guess
+	action_guess="$(get_pipeline_type "$BUILDKITE_PIPELINE_NAME")"
+	local action
+	action="$(plugin_get_var ACTION "$action_guess")"
 	assert_var action
-	local pacticipant="$(plugin_get_var PACTICIPANT)"
-	local repo_url="$(plugin_get_var REPO_URL $BUILDKITE_REPO)"
+
+	local pacticipant
+	pacticipant="$(plugin_get_var PACTICIPANT)"
+
+	local repo_url
+	repo_url="$(plugin_get_var REPO_URL "$BUILDKITE_REPO")"
 	assert_var repo_url
-	local main_branch="$(plugin_get_var MAIN_BRANCH main)"
-	local version="$(plugin_get_var VERSION $BUILDKITE_COMMIT)"
+
+	local main_branch
+	main_branch="$(plugin_get_var MAIN_BRANCH main)"
+
+	local version
+	version="$(plugin_get_var VERSION "$BUILDKITE_COMMIT")"
 	assert_var version
-	local branch="$(plugin_get_var BRANCH "$BUILDKITE_BRANCH")"
+
+	local branch
+	branch="$(plugin_get_var BRANCH "$BUILDKITE_BRANCH")"
 	assert_var branch
-	local environment="$(plugin_get_var ENVIRONMENT production)"
-	local pact_dir="$(plugin_get_var PACTS_PATH pacts)"
+
+	local environment
+	environment="$(plugin_get_var ENVIRONMENT production)"
+
+	local pact_dir
+	pact_dir="$(plugin_get_var PACTS_PATH pacts)"
 
 	if [ "$action" == "pr" ]; then
 		# PR pipeline
 		#
 		# Access to Buildkite Graphql API is needed for retrieving verification pipelines
-		local bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
+		local bk_gql_url
+		bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
 		assert_var BUILDKITE_GRAPHQL_API_TOKEN
 		assert_var BUILDKITE_BUILD_URL
 
