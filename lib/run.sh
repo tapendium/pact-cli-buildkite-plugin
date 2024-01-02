@@ -57,6 +57,16 @@ function update_pacts {
 	local pact_dir
 	pact_dir="$(plugin_get_var PACTS_PATH pacts)"
 
+	local skip_publish
+	skip_publish="$(plugin_get_var SKIP_PUBLISH "false")"
+
+	upsert_pacticipant "$pacticipant" "$main_branch" "$repo_url"
+	if [ "$skip_publish" = "true" ]; then
+		log "Skipping publishing of pacts"
+	else
+		publish_pacts "$version" "$pact_dir" "$branch"
+	fi
+
 	if [ "$action" == "pr" ]; then
 		# PR pipeline
 		#
@@ -65,9 +75,6 @@ function update_pacts {
 		bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
 		assert_var BUILDKITE_GRAPHQL_API_TOKEN
 		assert_var BUILDKITE_BUILD_URL
-
-		upsert_pacticipant "$pacticipant" "$main_branch" "$repo_url"
-		publish_pacts "$version" "$pact_dir" "$branch"
 
 		declare -a providers=()
 		get_providers_to_check providers "$pacticipant" "$version" "$environment"
@@ -84,8 +91,7 @@ function update_pacts {
 		done
 
 	elif [ "$action" == "merge" ]; then
-		# Merge pipeline - Deploy to production
-		publish_pacts "$version" "$pact_dir" "$branch"
+
 		record_deployment "$pacticipant" "$version" "$environment"
 	else
 		log "Invalid action type. Must be \"pr\" or \"merge\""

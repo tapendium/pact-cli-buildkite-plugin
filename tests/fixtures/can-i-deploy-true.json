@@ -1,0 +1,117 @@
+{
+  "summary": {
+    "deployable": true,
+    "reason": "All required verification results are published and successful",
+    "success": 1,
+    "failed": 0,
+    "unknown": 0
+  },
+  "notices": [
+    {
+      "type": "success",
+      "text": "All required verification results are published and successful"
+    }
+  ],
+  "matrix": [
+    {
+      "consumer": {
+        "name": "consumer-service",
+        "version": {
+          "number": "e25bc6aea3d8e121ba3b7f970a49f3604bc393bc",
+          "branch": "branch-name",
+          "branches": [
+            {
+              "name": "branch-name",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Version branch",
+                  "name": "branch-name",
+                  "href": "https://pact-broker.example.com/pacticipants/consumer-service/branches/branch-name/versions/e25bc6aea3d8e121ba3b7f970a49f3604bc393bc"
+                }
+              }
+            }
+          ],
+          "branchVersions": [
+            {
+              "name": "branch-name",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Version branch",
+                  "name": "branch-name",
+                  "href": "https://pact-broker.example.com/pacticipants/consumer-service/branches/branch-name/versions/e25bc6aea3d8e121ba3b7f970a49f3604bc393bc"
+                }
+              }
+            }
+          ],
+          "environments": [],
+          "_links": {
+            "self": {
+              "href": "https://pact-broker.example.com/pacticipants/consumer-service/versions/e25bc6aea3d8e121ba3b7f970a49f3604bc393bc"
+            }
+          },
+          "tags": []
+        },
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/consumer-service"
+          }
+        }
+      },
+      "provider": {
+        "name": "provider-service",
+        "version": {
+          "number": "f8ff8c8b65a7d3b505f74094f7d3262aece5115c",
+          "branch": null,
+          "branches": [],
+          "branchVersions": [],
+          "environments": [
+            {
+              "uuid": "b66cd3dd-93c9-413b-a761-481c50264f0e",
+              "name": "production",
+              "displayName": "Production",
+              "production": true,
+              "createdAt": "2023-04-14T03:44:01+00:00",
+              "_links": {
+                "self": {
+                  "title": "Environment",
+                  "name": "production",
+                  "href": "https://pact-broker.example.com/environments/b66cd3dd-93c9-413b-a761-481c50264f0e"
+                }
+              }
+            }
+          ],
+          "_links": {
+            "self": {
+              "href": "https://pact-broker.example.com/pacticipants/provider-service/versions/f8ff8c8b65a7d3b505f74094f7d3262aece5115c"
+            }
+          },
+          "tags": []
+        },
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/provider-service"
+          }
+        }
+      },
+      "pact": {
+        "createdAt": "2024-01-02T02:50:20+00:00",
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacts/provider/provider-service/consumer/consumer-service/version/e25bc6aea3d8e121ba3b7f970a49f3604bc393bc"
+          }
+        }
+      },
+      "verificationResult": {
+        "success": true,
+        "verifiedAt": "2023-12-18T02:24:14+00:00",
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacts/provider/provider-service/consumer/consumer-service/pact-version/ae291a78c6ef146da0fd9f6203f0e0abc1643431/metadata/Y3ZuPWUyNWJjNmFlYTNkOGUxMjFiYTNiN2Y5NzBhNDlmMzYwNGJjMzkzYmM/verification-results/333"
+          }
+        }
+      }
+    }
+  ]
+}

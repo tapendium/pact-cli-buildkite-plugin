@@ -37,6 +37,21 @@ prefix="BUILDKITE_PLUGIN_PACT_CLI"
 	unstub pact-broker
 }
 
+@test "get_providers_to_check returns an empty array when pacticipant is deployable" {
+	stub pact-broker "cat ./tests/fixtures/can-i-deploy-true.json"
+
+	source "$utils"
+	source "$pact"
+
+	declare -a providers=()
+	run get_providers_to_check providers service somehash production
+
+	assert_success
+	assert_output ""
+
+	unstub pact-broker
+}
+
 @test "get_repo_url returns repo url" {
 	stub pact-broker \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
