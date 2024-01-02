@@ -61,37 +61,42 @@ function update_pacts {
 	skip_publish="$(plugin_get_var SKIP_PUBLISH "false")"
 
 	upsert_pacticipant "$pacticipant" "$main_branch" "$repo_url"
-	if [ "$skip_publish" = "true" ]; then
-		log "Skipping publishing of pacts"
-	else
-		publish_pacts "$version" "$pact_dir" "$branch"
-	fi
 
 	if [ "$action" == "pr" ]; then
 		# PR pipeline
-		#
-		# Access to Buildkite Graphql API is needed for retrieving verification pipelines
-		local bk_gql_url
-		bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
-		assert_var BUILDKITE_GRAPHQL_API_TOKEN
-		assert_var BUILDKITE_BUILD_URL
 
-		declare -a providers=()
-		get_providers_to_check providers "$pacticipant" "$version" "$environment"
+		if [ "$skip_publish" = "true" ]; then
+			log "Skipping publishing of pacts"
+		else
+			publish_pacts "$version" "$pact_dir" "$branch"
 
-		for provider in "${providers[@]}"; do
-			log "Reading repository url for $provider from Pact broker"
-			url="$(get_repo_url "$provider")"
-			log "Repo url for provider $provider: $url"
-			pipeline="$(get_verification_pipeline "$url" "$bk_gql_url" $"BUILDKITE_GRAPHQL_API_TOKEN")"
-			log "Found pipeline $pipeline"
+			# Access to Buildkite Graphql API is needed for retrieving verification pipelines
+			local bk_gql_url
+			bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
+			assert_var BUILDKITE_GRAPHQL_API_TOKEN
+			assert_var BUILDKITE_BUILD_URL
 
-			trigger="$(generate_trigger_step "$provider" "$pacticipant" "$pipeline")"
-			echo "$trigger" | buildkite-agent pipeline upload
-		done
+			declare -a providers=()
+			get_providers_to_check providers "$pacticipant" "$version" "$environment"
+
+			for provider in "${providers[@]}"; do
+				log "Reading repository url for $provider from Pact broker"
+				url="$(get_repo_url "$provider")"
+				log "Repo url for provider $provider: $url"
+				pipeline="$(get_verification_pipeline "$url" "$bk_gql_url" $"BUILDKITE_GRAPHQL_API_TOKEN")"
+				log "Found pipeline $pipeline"
+
+				trigger="$(generate_trigger_step "$provider" "$pacticipant" "$pipeline")"
+				echo "$trigger" | buildkite-agent pipeline upload
+			done
+		fi
 
 	elif [ "$action" == "merge" ]; then
-
+		if [ "$skip_publish" = "true" ]; then
+			log "Skipping publishing of pacts"
+		else
+			publish_pacts "$version" "$pact_dir" "$branch"
+		fi
 		record_deployment "$pacticipant" "$version" "$environment"
 	else
 		log "Invalid action type. Must be \"pr\" or \"merge\""
