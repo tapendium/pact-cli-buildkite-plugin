@@ -77,7 +77,7 @@ utils=$PWD/lib/utils.sh
 	assert_output merge
 }
 
-@test "get_pipeline_type returns unkonwn for unknown pipelines" {
+@test "get_pipeline_type returns unknown for unknown pipelines" {
 	source $utils
 
 	run get_pipeline_type "service test: mysteryAction"

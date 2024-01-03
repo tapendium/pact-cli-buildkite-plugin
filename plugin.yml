@@ -44,6 +44,9 @@ configuration:
       type: string
       description: Buildkite graphql API URL
       default: https://graphql.buildkite.com/v1
+    skip-publish:
+      type: boolean
+      description: Allow skipping publishing pacts
   required:
     - pacticipant
   additionalProperties: false
