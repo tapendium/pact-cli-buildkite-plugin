@@ -94,9 +94,13 @@ function update_pacts {
 	elif [ "$action" == "merge" ]; then
 		if [ "$skip_publish" = "true" ]; then
 			log "Skipping publishing of pacts"
+			# Pacticipant version needs to be manually created before recording deployment
+			# when pacts are not published
+			upsert_pacticipant_version "$pacticipant" "$version"
 		else
 			publish_pacts "$version" "$pact_dir" "$branch"
 		fi
+
 		record_deployment "$pacticipant" "$version" "$environment"
 	else
 		log "Invalid action type. Must be \"pr\" or \"merge\""
