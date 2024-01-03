@@ -77,3 +77,13 @@ function get_providers_to_check {
 		log "$prov"
 	fi
 }
+
+# Upsert pacticipant version
+function upsert_pacticipant_version {
+	local pacticipant=$1
+	local version=$2
+
+	pact-broker create-or-update-version \
+		--pacticipant "$pacticipant" \
+		--version "$version"
+}
