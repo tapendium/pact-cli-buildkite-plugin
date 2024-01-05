@@ -83,7 +83,7 @@ function update_pacts {
 				log "Reading repository url for $provider from Pact broker"
 				url="$(get_repo_url "$provider")"
 				log "Repo url for provider $provider: $url"
-				pipeline="$(get_verification_pipeline "$url" "$bk_gql_url" $"BUILDKITE_GRAPHQL_API_TOKEN")"
+				pipeline="$(get_verification_pipeline "$url" "$bk_gql_url" "$BUILDKITE_GRAPHQL_API_TOKEN")"
 				log "Found pipeline $pipeline"
 
 				trigger="$(generate_trigger_step "$provider" "$pacticipant" "$pipeline")"
