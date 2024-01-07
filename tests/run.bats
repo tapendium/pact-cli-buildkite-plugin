@@ -45,7 +45,6 @@ export BUILDKITE_BUILD_URL=https://buildkite.com/build-url
 
 	export "${prefix}_PACTICIPANT"=service
 	export "${prefix}_SKIP_PUBLISH"=true
-	export "${prefix}_DEBUG"=true
 	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch

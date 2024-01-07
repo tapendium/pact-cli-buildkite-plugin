@@ -72,9 +72,9 @@ function get_providers_to_check {
 		--output json)"; then
 		log "Summary: $(jq -nr --argjson result "$result" '$result.summary.reason')"
 
-		prov=$(jq -nr --argjson result "${result}" '$result.matrix | .[].provider.name')
+		readarray -t prov < <(jq -nr --argjson result "${result}" '$result.matrix | .[] | select(.verificationResult.success != true) | .provider.name')
 		log "Providers needing re-verification:"
-		log "$prov"
+		log "${prov[@]}"
 	fi
 }
 

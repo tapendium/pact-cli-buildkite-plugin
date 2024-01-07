@@ -24,15 +24,10 @@ prefix="BUILDKITE_PLUGIN_PACT_CLI"
 	source "$pact"
 
 	declare -a providers=()
-	run get_providers_to_check providers service somehash production
+	run get_providers_to_check providers consumer-service somehash production
 
 	assert_success
-	assert_output --partial "$(
-		cat <<-EOF
-			Providers needing re-verification:
-			provider-service
-		EOF
-	)"
+	assert_line provider-service
 
 	unstub pact-broker
 }
