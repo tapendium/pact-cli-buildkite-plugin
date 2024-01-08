@@ -47,6 +47,9 @@ configuration:
     skip-publish:
       type: boolean
       description: Allow skipping publishing pacts
+    skip-verify:
+      type: boolean
+      description: Allow skipping verification of pacts
   required:
     - pacticipant
   additionalProperties: false
