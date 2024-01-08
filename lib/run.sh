@@ -60,6 +60,9 @@ function update_pacts {
 	local skip_publish
 	skip_publish="$(plugin_get_var SKIP_PUBLISH "false")"
 
+	local skip_verify
+	skip_verify="$(plugin_get_var SKIP_VERIFY "false")"
+
 	upsert_pacticipant "$pacticipant" "$main_branch" "$repo_url"
 
 	if [ "$action" == "pr" ]; then
@@ -69,12 +72,17 @@ function update_pacts {
 			log "Skipping publishing of pacts"
 		else
 			publish_pacts "$version" "$pact_dir" "$branch"
+		fi
 
+		if [ "$skip_verify" = "true" ]; then
+			log "Skipping verification of pacts"
+		else
 			# Access to Buildkite Graphql API is needed for retrieving verification pipelines
 			local bk_gql_url
 			bk_gql_url="$(plugin_get_var GRAPHQL_URL "https://graphql.buildkite.com/v1")"
 			assert_var BUILDKITE_GRAPHQL_API_TOKEN
 			assert_var BUILDKITE_BUILD_URL
+			assert_var BUILDKITE_AGENT_ACCESS_TOKEN
 
 			declare -a providers=()
 			get_providers_to_check providers "$pacticipant" "$version" "$environment"

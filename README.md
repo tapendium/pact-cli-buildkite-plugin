@@ -35,7 +35,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: upload
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v0.1.2:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
 ```
 
@@ -54,8 +54,48 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: download
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v0.1.2:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
+```
+
+### Skip publishing of pacts in 'pr' or 'merge' pipeline
+
+```yml
+steps:
+  - label: 'Publish pacts but do not verify providers'
+    commands: npm run test
+    env:
+      PACT_BROKER_USERNAME: pact-user
+      PACT_BROKER_PASSWORD: pact-broker-password
+      PACT_BROKER_BASE_URL: pact-broker.example.com
+      BUILDKITE_GRAPHQL_API_TOKEN: bk-api-graphql-token
+    plugins:
+      - tapendium/tap-build-artifact#v1.1.0:
+          type: upload
+          artifacts-path: pacts/**
+      - tapendium/pact-cli#v0.2.0:
+          pacticipant: service-name
+          skip-publish: true
+```
+
+### Skip verification of pacts in 'pr' pipeline
+
+```yml
+steps:
+  - label: 'Publish pacts but do not verify providers'
+    commands: npm run test
+    env:
+      PACT_BROKER_USERNAME: pact-user
+      PACT_BROKER_PASSWORD: pact-broker-password
+      PACT_BROKER_BASE_URL: pact-broker.example.com
+      BUILDKITE_GRAPHQL_API_TOKEN: bk-api-graphql-token
+    plugins:
+      - tapendium/tap-build-artifact#v1.1.0:
+          type: upload
+          artifacts-path: pacts/**
+      - tapendium/pact-cli#v0.2.0:
+          pacticipant: service-name
+          skip-verify: true
 ```
 
 ### Override default settings
@@ -73,11 +113,11 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: upload
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v0.1.2:
+      - tapendium/pact-cli#v0.2.0:
           pacticipant: service-name
           action: merge #valid values: pr or merge
-          environment: test #default production
-          main-branch: master #default is main
+          environment: test #default - production
+          main-branch: master #default - main
           pacts-path: /some/path
-          version: someversion123 #default git commit
+          version: someversion123 #default - git commit
 ```
