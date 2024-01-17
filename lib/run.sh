@@ -68,7 +68,8 @@ function update_pacts {
 	if [ "$action" == "pr" ]; then
 		# PR pipeline
 
-		if [ "$skip_publish" = "true" ]; then
+		if [ "$skip_publish" = "true" ] || [ ! -d "$pact_dir" ]; then
+			[[ ! -d "$pact_dir" ]] && log "Pacts directory \"$pact_dir\" not found"
 			log "Skipping publishing of pacts"
 		else
 			publish_pacts "$version" "$pact_dir" "$branch"
@@ -100,7 +101,8 @@ function update_pacts {
 		fi
 
 	elif [ "$action" == "merge" ]; then
-		if [ "$skip_publish" = "true" ]; then
+		if [ "$skip_publish" = "true" ] || [ ! -d "$pact_dir" ]; then
+			[[ ! -d "$pact_dir" ]] && log "Pacts directory \"$pact_dir\" not found"
 			log "Skipping publishing of pacts"
 			# Pacticipant version needs to be manually created before recording deployment
 			# when pacts are not published
