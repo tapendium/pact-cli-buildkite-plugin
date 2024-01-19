@@ -25,16 +25,21 @@ function update_pacts {
 	assert_var PACT_BROKER_PASSWORD
 	assert_var PACT_BROKER_BASE_URL
 
-	assert_var "${PREFIX}_PACTICIPANT"
-
 	local action_guess
 	action_guess="$(get_pipeline_type "$BUILDKITE_PIPELINE_NAME")"
 	local action
 	action="$(plugin_get_var ACTION "$action_guess")"
 	assert_var action
 
+	local pacticipant_guess
+	pacticipant_guess="$(get_pacticipant "$BUILDKITE_REPO")"
+	log "Pacticipant guess: ${pacticipant_guess}"
+
 	local pacticipant
-	pacticipant="$(plugin_get_var PACTICIPANT)"
+	pacticipant="$(plugin_get_var PACTICIPANT "$pacticipant_guess")"
+
+	assert_var pacticipant
+	log "Pacticipant: ${pacticipant}"
 
 	local repo_url
 	repo_url="$(plugin_get_var REPO_URL "$BUILDKITE_REPO")"

@@ -84,3 +84,25 @@ utils=$PWD/lib/utils.sh
 
 	assert_failure
 }
+
+@test "get_pacticipant reads pacticipant name from repo" {
+	source $utils
+
+	export BUILDKITE_REPO=git@github.com:tapendium/repo-name.git
+
+	run get_pacticipant $BUILDKITE_REPO
+
+	assert_success
+	assert_output repo-name
+}
+
+@test "get_pacticipant returns nothing when unable to read pacticipant" {
+	source $utils
+
+	export BUILDKITE_REPO=notarepourl
+
+	run get_pacticipant $BUILDKITE_REPO
+
+	assert_success
+	assert_output ""
+}

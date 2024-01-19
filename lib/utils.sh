@@ -66,3 +66,14 @@ function get_pipeline_type {
 	fi
 	shopt -u nocasematch
 }
+
+# Determine pacticipant/service name from repo
+function get_pacticipant {
+	local repoUrl="$1"
+	local repo
+	repo="$(basename "$repoUrl")"
+
+	[[ $repo =~ ^(.+).git$ ]]
+
+	echo "${BASH_REMATCH[1]}"
+}
