@@ -20,19 +20,19 @@ export PACT_BROKER_BASE_URL=pact_url
 export BUILDKITE_GRAPHQL_API_TOKEN=token
 export BUILDKITE_BUILD_URL=https://buildkite.com/build-url
 export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
+export BUILDKITE_REPO=git@github.com:tapendium/service.git
 
 @test "run.sh runs to completion" {
 	stub curl "cat ./tests/fixtures/buildkite-pipelines.json"
 	stub buildkite-agent ""
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
 		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 
 	export "${prefix}_PACTICIPANT"=service
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -48,13 +48,12 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 
 @test "run.sh runs to completion for merge pipelines" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
 		"record-deployment --pacticipant service --version somehash --environment production : echo 'recording deployment'"
 
 	export "${prefix}_PACTICIPANT"=service
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: deploy"
@@ -68,7 +67,7 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 
 @test "skip_publish option skips publishing pacts" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 	stub buildkite-agent ""
@@ -76,7 +75,6 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 	export "${prefix}_PACTICIPANT"=service
 	export "${prefix}_SKIP_PUBLISH"=true
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -92,13 +90,12 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 
 @test "skip_verify option skips verification of pacts in pr pipeline" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'"
 
 	export "${prefix}_PACTICIPANT"=service
 	export "${prefix}_SKIP_VERIFY"=true
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -116,12 +113,11 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 	stub curl "cat ./tests/fixtures/buildkite-pipelines.json"
 	stub buildkite-agent ""
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 
 	export "${prefix}_PACTICIPANT"=service
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -138,12 +134,11 @@ export BUILDKITE_AGENT_ACCESS_TOKEN=bk_token
 
 @test "run.sh skips publish for merge pipeline when pacts directory is not found" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url repo : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
 		"create-or-update-version --pacticipant service --version somehash : echo 'creating/updating pacticipant version'" \
 		"record-deployment --pacticipant service --version somehash --environment production : echo 'recording deployment'"
 
 	export "${prefix}_PACTICIPANT"=service
-	export BUILDKITE_REPO=repo
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: deploy"
