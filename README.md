@@ -35,8 +35,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: upload
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v0.4.0:
-          pacticipant: service-name
+      - tapendium/pact-cli#v0.4.0: ~
 ```
 
 ### Publish pacts and record deployment in 'merge' pipeline
@@ -54,8 +53,7 @@ steps:
       - tapendium/tap-build-artifact#v1.1.0:
           type: download
           artifacts-path: pacts/**
-      - tapendium/pact-cli#v0.4.0:
-          pacticipant: service-name
+      - tapendium/pact-cli#v0.4.0: ~
 ```
 
 ### Skip publishing of pacts in 'pr' or 'merge' pipeline
@@ -74,7 +72,6 @@ steps:
           type: upload
           artifacts-path: pacts/**
       - tapendium/pact-cli#v0.4.0:
-          pacticipant: service-name
           skip-publish: true
 ```
 
@@ -94,7 +91,6 @@ steps:
           type: upload
           artifacts-path: pacts/**
       - tapendium/pact-cli#v0.4.0:
-          pacticipant: service-name
           skip-verify: true
 ```
 
