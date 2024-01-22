@@ -105,13 +105,9 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 
 }
 
-@test "run.sh skips publish when pacts directory is not found" {
-	stub curl "cat ./tests/fixtures/buildkite-pipelines.json"
-	stub buildkite-agent ""
+@test "run.sh skips publish and verify when pacts directory is not found" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
-		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
-		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
+		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'"
 
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
@@ -121,10 +117,9 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 
 	assert_success
 	assert_line "Pacts directory \"pacts\" not found"
+	assert_line "Skipping verification of pacts"
 
 	unstub pact-broker
-	unstub buildkite-agent
-	unstub curl
 }
 
 @test "run.sh skips publish for merge pipeline when pacts directory is not found" {

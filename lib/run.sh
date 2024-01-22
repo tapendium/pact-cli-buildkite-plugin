@@ -80,7 +80,8 @@ function update_pacts {
 			publish_pacts "$version" "$pact_dir" "$branch"
 		fi
 
-		if [ "$skip_verify" = "true" ]; then
+		if [ "$skip_verify" = "true" ] || [ ! -d "$pact_dir" ]; then
+			[[ ! -d "$pact_dir" ]] && log "Pacts directory \"$pact_dir\" not found"
 			log "Skipping verification of pacts"
 		else
 			# Access to Buildkite Graphql API is needed for retrieving verification pipelines
