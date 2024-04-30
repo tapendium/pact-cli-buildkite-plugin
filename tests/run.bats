@@ -26,12 +26,13 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 	stub curl "cat ./tests/fixtures/buildkite-pipelines.json"
 	stub buildkite-agent ""
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name consumer-service --main-branch main --repository-url git@github.com:tapendium/consumer-service.git : echo 'creating/updating pacticipant'" \
 		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
-		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
+		"can-i-deploy --pacticipant consumer-service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
+	export BUILDKITE_REPO=git@github.com:tapendium/consumer-service.git
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -65,13 +66,14 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 
 @test "skip_publish option skips publishing pacts" {
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
-		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
+		"create-or-update-pacticipant --name consumer-service --main-branch main --repository-url git@github.com:tapendium/consumer-service.git : echo 'creating/updating pacticipant'" \
+		"can-i-deploy --pacticipant consumer-service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 	stub buildkite-agent ""
 
 	export "${prefix}_SKIP_PUBLISH"=true
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
+	export BUILDKITE_REPO=git@github.com:tapendium/consumer-service.git
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
 	export BUILDKITE_PIPELINE_NAME="service test: validate"
@@ -144,13 +146,13 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 	stub curl "cat ./tests/fixtures/buildkite-pipelines.json"
 	stub buildkite-agent ""
 	stub pact-broker \
-		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/other-repo.git : echo 'creating/updating pacticipant'" \
+		"create-or-update-pacticipant --name consumer-service --main-branch main --repository-url git@github.com:tapendium/other-repo.git : echo 'creating/updating pacticipant'" \
 		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
-		"can-i-deploy --pacticipant service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
+		"can-i-deploy --pacticipant consumer-service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 
 	export BUILDKITE_REPO=git@github.com:tapendium/other-repo.git
-	export "${prefix}_PACTICIPANT"=service
+	export "${prefix}_PACTICIPANT"=consumer-service
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
 	export BUILDKITE_COMMIT=somehash
 	export BUILDKITE_BRANCH=branch
