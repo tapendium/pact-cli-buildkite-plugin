@@ -1,0 +1,169 @@
+{
+  "summary": {
+    "deployable": null,
+    "reason": "There is no verified pact between the version of alpha-service-gamma currently in production (68d983f17c67b9d531f5534c0256d966037ec534) and version 5ef3b2b3ff2d8271e31a3e5c152200f770447e1d of service-gamma\nThere is no verified pact between version 5ef3b2b3ff2d8271e31a3e5c152200f770447e1d of service-gamma and the version of service-alpha currently in production (58d7754f8cecc0bfc9bd130a0d57fe7bb48db90b)",
+    "success": 0,
+    "failed": 0,
+    "unknown": 2
+  },
+  "notices": [
+    {
+      "type": "error",
+      "text": "There is no verified pact between the version of alpha-service-gamma currently in production (68d983f17c67b9d531f5534c0256d966037ec534) and version 5ef3b2b3ff2d8271e31a3e5c152200f770447e1d of service-gamma"
+    },
+    {
+      "type": "error",
+      "text": "There is no verified pact between version 5ef3b2b3ff2d8271e31a3e5c152200f770447e1d of service-gamma and the version of service-alpha currently in production (58d7754f8cecc0bfc9bd130a0d57fe7bb48db90b)"
+    }
+  ],
+  "matrix": [
+    {
+      "consumer": {
+        "name": "alpha-service-gamma",
+        "version": {
+          "number": "68d983f17c67b9d531f5534c0256d966037ec534",
+          "branch": "main",
+          "branches": [
+            {
+              "name": "main",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Branch version",
+                  "name": "main",
+                  "href": "https://pact-broker.example.com/pacticipants/alpha-service-gamma/branches/main/versions/68d983f17c67b9d531f5534c0256d966037ec534"
+                }
+              }
+            }
+          ],
+          "branchVersions": [
+            {
+              "name": "main",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Branch version",
+                  "name": "main",
+                  "href": "https://pact-broker.example.com/pacticipants/alpha-service-gamma/branches/main/versions/68d983f17c67b9d531f5534c0256d966037ec534"
+                }
+              }
+            }
+          ],
+          "environments": [
+            {
+              "uuid": "b66cd3dd-93c9-413b-a761-481c50264f0e",
+              "name": "production",
+              "displayName": "Production",
+              "production": true,
+              "createdAt": "2023-04-14T03:44:01+00:00",
+              "_links": {
+                "self": {
+                  "title": "Environment",
+                  "name": "production",
+                  "href": "https://pact-broker.example.com/environments/b66cd3dd-93c9-413b-a761-481c50264f0e"
+                }
+              }
+            }
+          ],
+          "_links": {
+            "self": {
+              "href": "https://pact-broker.example.com/pacticipants/alpha-service-gamma/versions/68d983f17c67b9d531f5534c0256d966037ec534"
+            }
+          },
+          "tags": [
+          ]
+        },
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/alpha-service-gamma"
+          }
+        }
+      },
+      "provider": {
+        "name": "service-gamma",
+        "version": null,
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/service-gamma"
+          }
+        }
+      },
+      "pact": {
+        "createdAt": "2024-04-29T21:34:33+00:00",
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacts/provider/service-gamma/consumer/alpha-service-gamma/version/68d983f17c67b9d531f5534c0256d966037ec534"
+          }
+        }
+      },
+      "verificationResult": null
+    },
+    {
+      "consumer": {
+        "name": "service-gamma",
+        "version": {
+          "number": "5ef3b2b3ff2d8271e31a3e5c152200f770447e1d",
+          "branch": "dependabot/npm_and_yarn/backend/aws-sdk/s3-request-presigner-3.565.0",
+          "branches": [
+            {
+              "name": "dependabot/npm_and_yarn/backend/aws-sdk/s3-request-presigner-3.565.0",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Branch version",
+                  "name": "dependabot/npm_and_yarn/backend/aws-sdk/s3-request-presigner-3.565.0",
+                  "href": "https://pact-broker.example.com/pacticipants/service-gamma/branches/dependabot%2Fnpm_and_yarn%2Fbackend%2Faws-sdk%2Fs3-request-presigner-3.565.0/versions/5ef3b2b3ff2d8271e31a3e5c152200f770447e1d"
+                }
+              }
+            }
+          ],
+          "branchVersions": [
+            {
+              "name": "dependabot/npm_and_yarn/backend/aws-sdk/s3-request-presigner-3.565.0",
+              "latest": true,
+              "_links": {
+                "self": {
+                  "title": "Branch version",
+                  "name": "dependabot/npm_and_yarn/backend/aws-sdk/s3-request-presigner-3.565.0",
+                  "href": "https://pact-broker.example.com/pacticipants/service-gamma/branches/dependabot%2Fnpm_and_yarn%2Fbackend%2Faws-sdk%2Fs3-request-presigner-3.565.0/versions/5ef3b2b3ff2d8271e31a3e5c152200f770447e1d"
+                }
+              }
+            }
+          ],
+          "environments": [
+          ],
+          "_links": {
+            "self": {
+              "href": "https://pact-broker.example.com/pacticipants/service-gamma/versions/5ef3b2b3ff2d8271e31a3e5c152200f770447e1d"
+            }
+          },
+          "tags": [
+          ]
+        },
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/service-gamma"
+          }
+        }
+      },
+      "provider": {
+        "name": "service-alpha",
+        "version": null,
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacticipants/service-alpha"
+          }
+        }
+      },
+      "pact": {
+        "createdAt": "2024-04-29T21:11:58+00:00",
+        "_links": {
+          "self": {
+            "href": "https://pact-broker.example.com/pacts/provider/service-alpha/consumer/service-gamma/version/5ef3b2b3ff2d8271e31a3e5c152200f770447e1d"
+          }
+        }
+      },
+      "verificationResult": null
+    }
+  ]
+}

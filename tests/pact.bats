@@ -32,6 +32,21 @@ prefix="BUILDKITE_PLUGIN_PACT_CLI"
 	unstub pact-broker
 }
 
+@test "get_providers_to_check gets the correct provider" {
+	stub pact-broker "cat ./tests/fixtures/can-i-deploy-false-ex1.json && exit 1"
+
+	source "$utils"
+	source "$pact"
+
+	declare -a providers=()
+	run get_providers_to_check providers service-gamma somehash production
+
+	assert_success
+	assert_line service-alpha
+
+	unstub pact-broker
+}
+
 @test "get_providers_to_check returns an empty array when pacticipant is deployable" {
 	stub pact-broker "cat ./tests/fixtures/can-i-deploy-true.json"
 
