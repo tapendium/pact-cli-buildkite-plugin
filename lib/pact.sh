@@ -72,7 +72,9 @@ function get_providers_to_check {
 		--output json)"; then
 		log "Summary: $(jq -nr --argjson result "$result" '$result.summary.reason')"
 
-		readarray -t prov < <(jq -nr --argjson result "${result}" '$result.matrix | .[] | select(.verificationResult.success != true) | .provider.name')
+        # Find all provider services where this pacticipant is a consumer and
+        # no verification results exist.
+		readarray -t prov < <(jq -nr --argjson result "${result}" '$result.matrix | .[] | select(.consumer.name == '\""${pacticipant}"\"') | select(.verificationResult.success != true) | .provider.name')
 		log "Providers needing re-verification:"
 		log "${prov[@]}"
 	fi
