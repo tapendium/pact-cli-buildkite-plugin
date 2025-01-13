@@ -44,6 +44,7 @@ prefix="BUILDKITE_PLUGIN_PACT_CLI"
 			        PACT_PACTICIPANT: "consumer-service"
 			        TRIGGER_REASON: "pact_contract_requires_verification" 
 			        TRIGGER_BUILD_URL: "https://buildkite.com/build-url"
+			        STEP_KEYWORD: pact
 		EOF
 	)"
 }
