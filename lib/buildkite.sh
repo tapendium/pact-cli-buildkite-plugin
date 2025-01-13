@@ -40,6 +40,7 @@ function generate_trigger_step {
         PACT_PACTICIPANT: "${pacticipant}"
         TRIGGER_REASON: "pact_contract_requires_verification" 
         TRIGGER_BUILD_URL: "${BUILDKITE_BUILD_URL}"
+        STEP_KEYWORD: pact
 
 EOF
 }
