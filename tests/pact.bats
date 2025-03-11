@@ -76,3 +76,16 @@ prefix="BUILDKITE_PLUGIN_PACT_CLI"
 
 	unstub pact-broker
 }
+@test "publish pact produces correct output" {
+	stub pact-broker \
+		"publish test-dir --consumer-app-version test-version --branch test-branch : echo  'run success' "
+
+	source "$utils"
+	source "$pact"
+
+	run publish_pacts test-version test-dir test-branch
+	assert_success
+
+	unstub pact-broker
+
+}

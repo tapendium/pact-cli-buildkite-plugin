@@ -27,7 +27,7 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 	stub buildkite-agent ""
 	stub pact-broker \
 		"create-or-update-pacticipant --name consumer-service --main-branch main --repository-url git@github.com:tapendium/consumer-service.git : echo 'creating/updating pacticipant'" \
-		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
+		"publish $TEST_PACTS_DIR --consumer-app-version somehash --branch branch : echo 'publishing pacts'" \
 		"can-i-deploy --pacticipant consumer-service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 
@@ -49,7 +49,7 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 @test "run.sh runs to completion for merge pipelines" {
 	stub pact-broker \
 		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
-		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
+		"publish $TEST_PACTS_DIR --consumer-app-version somehash --branch branch : echo 'publishing pacts'" \
 		"record-deployment --pacticipant service --version somehash --environment production : echo 'recording deployment'"
 
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
@@ -90,7 +90,7 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 @test "skip_verify option skips verification of pacts in pr pipeline" {
 	stub pact-broker \
 		"create-or-update-pacticipant --name service --main-branch main --repository-url git@github.com:tapendium/service.git : echo 'creating/updating pacticipant'" \
-		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'"
+		"publish $TEST_PACTS_DIR --consumer-app-version somehash --branch branch : echo 'publishing pacts'"
 
 	export "${prefix}_SKIP_VERIFY"=true
 	export "${prefix}_PACTS_PATH"="$TEST_PACTS_DIR"
@@ -147,7 +147,7 @@ export BUILDKITE_REPO=git@github.com:tapendium/service.git
 	stub buildkite-agent ""
 	stub pact-broker \
 		"create-or-update-pacticipant --name consumer-service --main-branch main --repository-url git@github.com:tapendium/other-repo.git : echo 'creating/updating pacticipant'" \
-		"publish pacts --consumer-app-version somehash --branch branch $TEST_PACTS_DIR : echo 'publishing pacts'" \
+		"publish $TEST_PACTS_DIR --consumer-app-version somehash --branch branch : echo 'publishing pacts'" \
 		"can-i-deploy --pacticipant consumer-service --version somehash --to-environment production --output json : cat ./tests/fixtures/can-i-deploy-false.json && exit 1" \
 		"describe-pacticipant --name provider-service --output json : cat ./tests/fixtures/describe-pacticipant.json"
 

@@ -32,10 +32,10 @@ function publish_pacts {
 	local pact_dir=$2
 	local branch=$3
 
-	pact-broker publish pacts \
+	pact-broker publish "$pact_dir" \
 		--consumer-app-version "$version" \
-		--branch "$branch" \
-		"$pact_dir"
+		--branch "$branch"
+
 }
 
 # Get pacticipant repo url
